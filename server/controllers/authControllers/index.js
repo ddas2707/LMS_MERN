@@ -14,7 +14,7 @@ const registerUser = async (req, res) => {
         })
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ userName, userEmail, password: hashedPassword });
+    const newUser = new User({ userName, userEmail, role, password: hashedPassword });
 
     await newUser.save();
 
@@ -27,10 +27,10 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     const { userEmail, password } = req.body;
     const checkUser = await User.findOne({ userEmail });
-    console.log("User now trying to login :", checkUser)
+    console.log("User has now loggedIn :", checkUser)
 
     //here has to exists and its hashed password must match with the database password
-    if (!checkUser || await bcrypt.compare(password, checkUser?.password)) {
+    if (!checkUser || !(await bcrypt.compare(password, checkUser.password))) {
         return res.status(401).json({
             success: false,
             message: "Invalid Credentials or User do not Exists"
