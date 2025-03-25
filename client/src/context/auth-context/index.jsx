@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { initialSignInFormData } from "@/config";
 import { initialSignUpFormData } from "@/config";
 import { regsiterService, loginService, checkAuthService } from "@/services";
@@ -13,6 +14,8 @@ export default function AuthProvider({ children }) {
         authenticate: false,
         user: null,
     })
+
+    const [loading, setLoading] = useState(true);
 
     async function handleRegisterUser(event) {
         event.preventDefault();
@@ -39,17 +42,30 @@ export default function AuthProvider({ children }) {
     }
     //auth function to check User
     async function checkAuthUser() {
-        const data = await checkAuthService();
-        if (data.success) {
-            setAuth({
-                authenticate: true,
-                user: data?.data?.user,
-            })
-        } else {
-            setAuth({
-                authenticate: false,
-                user: null
-            })
+        try {
+            const data = await checkAuthService();
+            if (data.success) {
+                setAuth({
+                    authenticate: true,
+                    user: data?.data?.user,
+                })
+                setLoading(false);
+            } else {
+                setAuth({
+                    authenticate: false,
+                    user: null
+                })
+                setLoading(false);
+            }
+        } catch (error) {
+            console.log(error);
+            if (!error?.response?.data?.success) {
+                setAuth({
+                    authenticate: false,
+                    user: null,
+                })
+                setLoading(false);
+            }
         }
     }
     useEffect(() => {
@@ -67,7 +83,10 @@ export default function AuthProvider({ children }) {
             handleLoginUser,
             auth,
         }}>
-            {children}
+            {/* Lazy loading has implemented here */}
+            {
+                loading ? <Skeleton /> : children
+            }
         </AuthContext.Provider>
     )
 } 
