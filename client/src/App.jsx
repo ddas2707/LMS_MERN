@@ -6,6 +6,8 @@ import { AuthContext } from './context/auth-context'
 import InstructorDashboard from './pages/instructor'
 import StudentViewCommonLayout from './components/student-view/common-layout'
 import StudentHomePage from './pages/student/home'
+import NotFoundPage from './pages/not-found'
+import InstructorDashboardPage from './pages/instructor'
 
 
 function App() {
@@ -28,7 +30,7 @@ function App() {
           path="/instructor"
           element={
             <ProtectedRoutes
-              element={<InstructorDashboard />}
+              element={<InstructorDashboardPage />}
               authenticated={auth?.authenticate}
               user={auth?.user}
             />
@@ -48,6 +50,7 @@ function App() {
           <Route path='' element={<StudentHomePage />} />
           <Route path='home' element={<StudentHomePage />} />
         </Route>
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
 
     </>
