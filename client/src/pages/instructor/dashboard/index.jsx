@@ -1,6 +1,6 @@
 function InstructorDashboard() {
     return (
-        <duv>INstructor Dashboard</duv>
+        <div>Instructor Dashboard</div>
     )
 }
 
