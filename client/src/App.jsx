@@ -8,6 +8,7 @@ import StudentViewCommonLayout from './components/student-view/common-layout'
 import StudentHomePage from './pages/student/home'
 import NotFoundPage from './pages/not-found'
 import InstructorDashboardPage from './pages/instructor'
+import AddNewCourse from './pages/instructor/add-new-course'
 
 
 function App() {
@@ -31,6 +32,16 @@ function App() {
           element={
             <ProtectedRoutes
               element={<InstructorDashboardPage />}
+              authenticated={auth?.authenticate}
+              user={auth?.user}
+            />
+          }
+        />
+        <Route
+          path="/instructor/create-new-course"
+          element={
+            <ProtectedRoutes
+              element={<AddNewCourse />}
               authenticated={auth?.authenticate}
               user={auth?.user}
             />

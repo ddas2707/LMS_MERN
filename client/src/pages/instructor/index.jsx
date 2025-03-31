@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import InstructorCourses from "./courses";
-import InstructorDashboard from "./dashboard";
+import InstructorCourses from "../../components/instructor-view/courses";
+import InstructorDashboard from "../../components/instructor-view/dashboard";
 import { BarChart, Book, LogOut } from "lucide-react";
 import { useContext, useState } from "react";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
@@ -99,7 +99,7 @@ function InstructorDashboardPage() {
                 </aside>
 
                 {/* Main Content */}
-                <main className="flex-1 p-8 overflow-y-auto bg-red-600">
+                <main className="flex-1 p-8 overflow-y-auto bg-gray-100">
                     <div className="max-w-7xl mx-auto">
                         <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
                         <Tabs value={activeTab} onValueChange={setActiveTab}>
