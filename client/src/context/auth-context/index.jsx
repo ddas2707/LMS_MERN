@@ -1,13 +1,13 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { initialSignInFormData } from "@/config";
 import { initialSignUpFormData } from "@/config";
-import { regsiterService, loginService, checkAuthService } from "@/services";
+import { registerService, loginService, checkAuthService } from "@/services";
 import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 
-export const AuthContext = createContext(null);
+const AuthContext = createContext(null);
 
-export default function AuthProvider({ children }) {
+function AuthProvider({ children }) {
     const [signInFormData, setSignInFormData] = useState(initialSignInFormData);
     const [signUpFormData, setSignUpFormData] = useState(initialSignUpFormData);
     const [auth, setAuth] = useState({
@@ -19,7 +19,7 @@ export default function AuthProvider({ children }) {
 
     async function handleRegisterUser(event) {
         event.preventDefault();
-        const data = await regsiterService(signUpFormData);
+        const data = await registerService(signUpFormData);
         console.log(data);
     }
 
@@ -98,4 +98,6 @@ export default function AuthProvider({ children }) {
             }
         </AuthContext.Provider>
     )
-} 
+}
+
+export { AuthContext, AuthProvider };
