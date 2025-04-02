@@ -8,7 +8,7 @@ function FormControls({ formControls = [], formData, setFormData }) {
     function renderComponentByType(getControlItem) {
         let element = null;
         const currentControlItemValue = formData[getControlItem.name] || '';
-        switch (getControlItem.type) {
+        switch (getControlItem.componentType) { // this was the mf error ---> type ❌ componentType ✅
             case 'input':
                 element = (<Input
                     id={getControlItem.name}
@@ -22,8 +22,8 @@ function FormControls({ formControls = [], formData, setFormData }) {
             case 'select':
                 element = (
                     <Select
-                        onValueChange={(val) => setFormData({ ...formData, [getControlItem.name]: val })}
-                        value={currentControlItemValue}
+                        onValueChange={(value) => setFormData({ ...formData, [getControlItem.name]: value })}
+                        value={String(currentControlItemValue)}
                     >
                         <SelectTrigger className="w-full">
                             <SelectValue placeholder={getControlItem.label} />
@@ -31,7 +31,7 @@ function FormControls({ formControls = [], formData, setFormData }) {
                         <SelectContent>
                             {getControlItem.options && getControlItem.options.length > 0
                                 ? getControlItem.options.map((optionItem) => (
-                                    <SelectItem key={optionItem.id} value={optionItem.id}>
+                                    <SelectItem key={String(optionItem.id)} value={String(optionItem.id)}>
                                         {optionItem.label}
                                     </SelectItem>
                                 ))
@@ -68,7 +68,7 @@ function FormControls({ formControls = [], formData, setFormData }) {
             {
                 formControls.map((controlItem) => (
                     <div key={controlItem.name} className="">
-                        <Label htmlFor={controlItem.Name}>{controlItem.label}</Label>
+                        <Label htmlFor={controlItem.name}>{controlItem.label}</Label>
                         {
                             renderComponentByType(controlItem)
                         }
