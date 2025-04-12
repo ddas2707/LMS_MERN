@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const authRoutes = require('./routes/auth-routes/index')
+const mediaRoutes = require('./routes/instructor-routes/media-route');
 
 // Create express app
 const app = express();
@@ -18,6 +19,7 @@ app.use(cors({
 
 app.use(express.json());
 
+
 mongoose.connect(MONGO_URI).then(() => {
     console.log("MongoDB is Connected");
 }).catch((e) => {
@@ -26,6 +28,8 @@ mongoose.connect(MONGO_URI).then(() => {
 
 //routes configuration
 app.use('/auth', authRoutes);
+app.use('/media', mediaRoutes);
+
 
 app.use((err, req, res, next) => {
     console.log(err.stack);

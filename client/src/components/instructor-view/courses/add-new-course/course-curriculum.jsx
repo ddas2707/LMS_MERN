@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { courseCurriculumInitialFormData } from "@/config";
 import { InstructorContext } from "@/context/instructor-context";
+import { Title } from "@radix-ui/react-alert-dialog";
 import React, { useContext } from "react";
 
 function CourseCurriculum() {
@@ -20,6 +21,15 @@ function CourseCurriculum() {
         console.log(courseCurriculumFormData);
     }
 
+    function handleCourseTitleChange(e, index) {
+        let cpyCourseCurriculumFormData = [...courseCurriculumFormData];
+        cpyCourseCurriculumFormData[index] = {
+            ...cpyCourseCurriculumFormData[index],
+            title: e.target.value
+        }
+        setCourseCurriculumFormData(cpyCourseCurriculumFormData);
+
+    }
     return (
         <>
             <Card>
@@ -38,6 +48,8 @@ function CourseCurriculum() {
                                             name={`title-${index + 1}`}
                                             placeholder="Enter Lecture Title"
                                             className="max-w-96"
+                                            onChange={(e) => handleCourseTitleChange(e, index)}
+                                            value={curriculumItem[index]?.title}
                                         />
                                         <div className="flex items-center space-x-2">
                                             <Switch
