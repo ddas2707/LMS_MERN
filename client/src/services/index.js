@@ -38,4 +38,16 @@ export async function checkAuthService() {
         console.error("Error in checking auth services", error);
         throw error;
     }
+}
+
+export async function mediaUploadService(formData) {
+    try {
+        const { data } = await axiosInstance.post("media/upload", formData)
+        console.log("media uploaded or not--> Check✅")
+        return data;
+    }
+    catch (error) {
+        console.error("Error in checking auth services", error);
+        throw error;
+    }
 } 
